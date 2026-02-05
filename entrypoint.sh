@@ -14,7 +14,7 @@ wait_for_port() {
 
     echo "Waiting for port $port to be available..."
 
-    while ! nc -z localhost $port; do
+    while ! nc -z 127.0.0.1 $port; do
         sleep 1
         count=$((count + 1))
         if [ $count -gt $timeout ]; then
