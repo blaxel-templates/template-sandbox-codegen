@@ -2,7 +2,7 @@ type = "sandbox"
 
 [runtime]
 generation = "mk3"
-memory = 8192
+memory = 4096
 [[runtime.ports]]
 name = "nextjs-dev"
 target = 3000
