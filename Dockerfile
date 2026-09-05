@@ -15,6 +15,8 @@ RUN mkdir -p /app \
   && npx create-next-app@latest /app --use-npm --typescript --eslint --tailwind --src-dir --app --import-alias "@/*" --no-git --yes --no-turbopack \
   && npm install @anthropic-ai/claude-code@latest
 
+COPY next.config.ts /app/next.config.ts
+
 # Expose ports for Next.js dev server
 EXPOSE 3000
 
