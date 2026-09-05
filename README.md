@@ -169,6 +169,24 @@ Contributions are welcome! Here's how you can contribute:
 
 Please make sure to test your changes with both local Docker and Blaxel deployment.
 
+## Next.js preview development
+
+Next.js blocks cross-origin requests to development endpoints by default. After creating your preview and obtaining its hostname, set `NEXT_ALLOWED_DEV_ORIGINS` in its runtime environment to your preview hostname, for example `my-preview.example.com`. Use hostnames only, without `https://`, a port, a path, or a preview token. Separate multiple trusted hostnames with commas. Restart the sandbox after updating its runtime environment so the dev server receives the new value.
+
+Only add previews you control. Do not allow every Blaxel preview with a wildcard, since other workspaces share the preview domain. The default empty list retains Next.js local-origin protection. Preview authentication is configured separately and still applies.
+
+For local Docker testing, pass `-e NEXT_ALLOWED_DEV_ORIGINS=my-preview.example.com` to `docker run`. See the [Next.js allowedDevOrigins documentation](https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins).
+
+Run the configuration tests with `node --experimental-strip-types --test tests/next-config.test.mjs` (Node.js 22.6+).
+
+To check actual development assets and hot reload, create a throwaway app with the same `create-next-app` command as the Dockerfile, copy `next.config.ts` into it, and start it with:
+
+```bash
+NEXT_ALLOWED_DEV_ORIGINS=demo.preview.example.com npm run dev -- --hostname 127.0.0.1 --port 3387
+```
+
+From this repository, run `node tests/preview.integration.mjs`. It verifies the rendered page, allowed development assets and hot-reload connection, and rejection of an untrusted origin. Run `npm run build` in the throwaway app to verify production compatibility.
+
 ## 🆘 Support
 
 If you need help with this template:
